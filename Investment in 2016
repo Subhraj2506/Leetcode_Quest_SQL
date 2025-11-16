@@ -1,0 +1,16 @@
+# Write your MySQL query statement below
+SELECT ROUND(SUM(ins.tiv_2016), 2) AS tiv_2016
+FROM Insurance ins
+WHERE 
+   
+  EXISTS (
+    SELECT 1 FROM Insurance i2
+    WHERE i2.tiv_2015 = ins.tiv_2015
+      AND i2.pid <> ins.pid
+  )  
+ 
+  AND (
+    SELECT COUNT(*) FROM Insurance i3
+    WHERE i3.lat = ins.lat
+      AND i3.lon = ins.lon
+  ) = 1;
